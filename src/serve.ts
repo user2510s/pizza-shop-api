@@ -11,6 +11,7 @@ import { fastifyCors } from "@fastify/cors";
 import cookie from "@fastify/cookie";
 import fastifyJwt from "@fastify/jwt";
 import "dotenv/config";
+import { createUser } from "./http/routes/users/create-user-router";
 
 const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -46,6 +47,8 @@ export function start() {
   app.register(fastifySwaggerUi, {
     routePrefix: "/docs",
   });
+
+  app.register(createUser);
 
   app.listen({
     port: Number(process.env.PORT),

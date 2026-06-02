@@ -1,19 +1,20 @@
-import { string } from "zod/v3";
 import { FastifyTypedInstance } from "../../../@types/types";
 import z from "zod";
+import { createUserController } from "../../controller/create-user-controller";
 
-async function createUser(app: FastifyTypedInstance) {
+export async function createUser(app: FastifyTypedInstance) {
   app.post(
     "/user",
     {
       schema: {
         body: z.object({
           email: z.email(),
+          password: z.string(),
+          name: z.string(),
+          lastName: z.string(),
         }),
       },
     },
-    async (req, rep) => {
-      const { email } = req.body;
-    },
+    createUserController,
   );
 }
