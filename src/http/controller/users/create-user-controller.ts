@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createUserSchema } from "../../schema/user/user-schema";
-import { UserRepository } from "../../repositores/user/user-repository";
-import { CreateUserService } from "../services/create-user-service";
+import { createUserSchema } from "../../../schema/user/user-schema";
+import { UserRepository } from "../../../repositores/user/user-repository";
+import { CreateUserService } from "../../services/users/create-user-service";
 
 const userRepository = new UserRepository();
 const createUserService = new CreateUserService(userRepository);

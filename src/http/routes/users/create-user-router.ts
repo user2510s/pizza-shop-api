@@ -1,18 +1,15 @@
 import { FastifyTypedInstance } from "../../../@types/types";
-import z from "zod";
-import { createUserController } from "../../controller/create-user-controller";
+import { createUserController } from "../../controller/users/create-user-controller";
+import { createUserSchema } from "../../../schema/user/user-schema";
 
 export async function createUser(app: FastifyTypedInstance) {
   app.post(
     "/user",
     {
       schema: {
-        body: z.object({
-          email: z.email(),
-          password: z.string(),
-          name: z.string(),
-          lastName: z.string(),
-        }),
+        description: "Criar usuario",
+        tags: ["user"],
+        body: createUserSchema,
       },
     },
     createUserController,
