@@ -3,7 +3,7 @@ import z from "zod";
 export const createUserSchema = z.object({
   email: z.email({ error: "Precisa ser um email valido" }),
   password: z.string().min(5, { error: "Precisa ter no minimo 5 caracterios" }),
-  name: z.string().min(5, { error: "Precisa ter no minimo 5 caracterios" }),
+  name: z.string().min(3, { error: "Precisa ter no minimo 5 caracterios" }),
   lastName: z.string().min(5, { error: "Precisa ter no minimo 5 caracterios" }),
 });
 
@@ -12,5 +12,10 @@ export const loginUserSchema = z.object({
   password: z.string().min(5, { error: "Precisa ter no minimo 5 caracterios" }),
 });
 
+export const profileUserSchema = z.object({
+  id: z.string(),
+});
+
 export type CreateUserDto = z.infer<typeof createUserSchema>;
 export type LoginUserDto = z.infer<typeof loginUserSchema>;
+export type ProfileUserDto = z.infer<typeof profileUserSchema>;

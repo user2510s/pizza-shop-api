@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../../../repositores/user/user-repository";
-import { LoginUserService } from "../../services/users/login-user-service";
+import { LoginUserService } from "../../../services/users/login-user-service";
 import { loginUserSchema } from "../../../schema/user/user-schema";
 
 const userRepositore = new UserRepository();
@@ -40,7 +40,7 @@ export async function loginUserController(
     });
 
     return rep.status(200).send({
-      success: true,
+      success: true,  
       message: "Usuario encontrado",
     });
   } catch (err) {}

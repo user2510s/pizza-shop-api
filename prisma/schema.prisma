@@ -12,11 +12,42 @@ datasource db {
   provider = "postgresql"
 }
 
+enum UserRole {
+  user
+  seller
+  admin
+}
+
 model User {
-  id       String @id @unique @default(uuid())
-  publicId String @unique @default(uuid())
-  email    String @unique
+  id       String   @id @default(uuid())
+  publicId String   @unique @default(uuid())
+  email    String   @unique
   name     String
   lastName String
   password String
+  role     UserRole @default(user)
+
+  restaurant Restaurant?
+  products   Products[]
+}
+
+model Restaurant {
+  id          String @id @default(uuid())
+  userId      String @unique
+  name        String
+  address     String
+  openingTime String
+  closingTime String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Products {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  description String
+  pricing     String
+  tags        String[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

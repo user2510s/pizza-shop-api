@@ -13,6 +13,8 @@ import fastifyJwt from "@fastify/jwt";
 import "dotenv/config";
 import { createUser } from "./http/routes/users/create-user-router";
 import { loginUser } from "./http/routes/users/login-user-router";
+import { profilerUser } from "./http/routes/users/profile-user-router";
+import { createProduct } from "./http/routes/products/create-products-router";
 
 const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -31,7 +33,7 @@ export function start() {
   app.setSerializerCompiler(serializerCompiler);
 
   app.register(fastifyCors, {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
     credentials: true,
   });
   app.register(fastifySwagger, {
@@ -51,7 +53,8 @@ export function start() {
 
   app.register(createUser);
   app.register(loginUser);
-
+  app.register(profilerUser);
+  app.register(createProduct);
   app.listen({
     port: Number(process.env.PORT),
   });

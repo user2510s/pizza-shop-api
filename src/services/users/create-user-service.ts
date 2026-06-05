@@ -1,6 +1,6 @@
-import { UserRepository } from "../../../repositores/user/user-repository";
-import { CreateUserDto } from "../../../schema/user/user-schema";
-import { createHash } from "../../../utils/hash";
+import { UserRepository } from "../../repositores/user/user-repository";
+import { CreateUserDto } from "../../schema/user/user-schema";
+import { createHash } from "../../utils/hash";
 
 export class CreateUserService {
   constructor(private userRepository: UserRepository) {}

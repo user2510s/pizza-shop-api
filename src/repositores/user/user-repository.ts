@@ -10,6 +10,19 @@ export class UserRepository {
     });
   }
 
+  async findById(id: string) {
+    return prisma.user.findMany({
+      where: {
+        id,
+      },
+      omit: {
+        password: true,
+        id: true,
+        role: true,
+      },
+    });
+  }
+
   async create(data: CreateUserDto) {
     const validateData = createUserSchema.parse(data);
 
