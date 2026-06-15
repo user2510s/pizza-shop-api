@@ -1,6 +1,5 @@
 import { FastifyTypedInstance } from "../../../@types/types";
 import { makeVerifyAuthMiddleware } from "../../../factories/make-verify-auth-middleware";
-import { prisma } from "../../../lib/prisma";
 import { profileUser } from "../../controller/users/profile-user-controller";
 
 //   preHandler: verifyAuth.handle.bind(verifyAuth),

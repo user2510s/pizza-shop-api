@@ -29,6 +29,25 @@ model User {
 
   restaurant Restaurant?
   products   Products[]
+  carts      Cart[]
+  historics  Historic[]
+}
+
+model Cart {
+  id        String @id @default(uuid())
+  userId    String
+  productId String
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Historic {
+  id        String @id @default(uuid())
+  userId    String
+  productId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Restaurant {
@@ -47,7 +66,8 @@ model Products {
   userId      String
   name        String
   description String
-  pricing     String
+  pricing     Int
   tags        String[]
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  carts       Cart[]
 }

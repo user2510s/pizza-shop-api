@@ -11,7 +11,7 @@ export class UserRepository {
   }
 
   async findById(id: string) {
-    return prisma.user.findMany({
+    return prisma.user.findFirst({
       where: {
         id,
       },
@@ -19,6 +19,37 @@ export class UserRepository {
         password: true,
         id: true,
         role: true,
+      },
+    });
+  }
+  async createCart(productId: string, userId: string) {
+    return prisma.cart.create({
+      data: {
+        productId,
+        userId,
+      },
+    });
+  }
+  async getItemsCart(userId: string) {
+    return prisma.cart.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        product: {
+          select: {
+            id: true,
+            name: true,
+            pricing: true,
+          },
+        },
+      },
+    });
+  }
+  async verifyItemCard(productId: string) {
+    return prisma.cart.findFirst({
+      where: {
+        productId,
       },
     });
   }

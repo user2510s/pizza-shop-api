@@ -15,6 +15,8 @@ import { createUser } from "./http/routes/users/create-user-router";
 import { loginUser } from "./http/routes/users/login-user-router";
 import { profilerUser } from "./http/routes/users/profile-user-router";
 import { createProduct } from "./http/routes/products/create-products-router";
+import { createRestaurant } from "./http/routes/restaurants/create-restaurant-router";
+import { cartUser } from "./http/routes/users/cart-user-router";
 
 const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -25,9 +27,9 @@ export function start() {
   }
   app.register(fastifyJwt, { secret: jwtSecret });
   app.register(cookie, {
-    secret: "my-secret", // for cookies signature
-    hook: "onRequest", // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
-    parseOptions: {}, // options for parsing cookies
+    secret: "my-secret",
+    hook: "onRequest",
+    parseOptions: {},
   });
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
@@ -55,6 +57,9 @@ export function start() {
   app.register(loginUser);
   app.register(profilerUser);
   app.register(createProduct);
+  app.register(createRestaurant);
+  app.register(cartUser);
+
   app.listen({
     port: Number(process.env.PORT),
   });

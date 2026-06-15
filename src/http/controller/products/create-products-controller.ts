@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { creteProductsSchema } from "../../../schema/products/products-schema";
+import { createProductsSchema } from "../../../schema/products/products-schema";
 import { ProductRepositore } from "../../../repositores/product/product-repository";
 import { CreateProductService } from "../../../services/products/create-product-service";
 
@@ -10,7 +10,7 @@ export async function createProductsController(
   req: FastifyRequest,
   rep: FastifyReply,
 ) {
-  const { name, description, pricing, tags } = creteProductsSchema.parse(
+  const { name, description, pricing, tags } = createProductsSchema.parse(
     req.body,
   );
 

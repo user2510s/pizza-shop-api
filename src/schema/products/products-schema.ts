@@ -1,11 +1,11 @@
 import z from "zod";
 
-export const creteProductsSchema = z.object({
+export const createProductsSchema = z.object({
   userId: z.string(),
   name: z.string(),
-  pricing: z.string(),
+  pricing: z.number().default(100),
   description: z.string(),
   tags: z.array(z.string()).default(["mussarela", "borda-larga"]),
 });
 
-export type CreateProductDto = z.infer<typeof creteProductsSchema>;
+export type CreateProductDto = z.infer<typeof createProductsSchema>;

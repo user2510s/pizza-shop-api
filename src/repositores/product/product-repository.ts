@@ -1,7 +1,7 @@
 import { prisma } from "../../lib/prisma";
 import {
   CreateProductDto,
-  creteProductsSchema,
+  createProductsSchema,
 } from "../../schema/products/products-schema";
 
 export class ProductRepositore {
@@ -16,7 +16,7 @@ export class ProductRepositore {
     });
   }
   async create(data: CreateProductDto) {
-    const validateData = creteProductsSchema.parse(data);
+    const validateData = createProductsSchema.parse(data);
 
     return prisma.products.create({
       data: validateData,

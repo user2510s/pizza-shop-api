@@ -1,6 +1,6 @@
 import { FastifyTypedInstance } from "../../../@types/types";
 import { makeVerifyAuthMiddleware } from "../../../factories/make-verify-auth-middleware";
-import { creteProductsSchema } from "../../../schema/products/products-schema";
+import { createProductsSchema } from "../../../schema/products/products-schema";
 import { createProductsController } from "../../controller/products/create-products-controller";
 
 export async function createProduct(app: FastifyTypedInstance) {
@@ -12,7 +12,7 @@ export async function createProduct(app: FastifyTypedInstance) {
       schema: {
         description: "Criar Produto",
         tags: ["products"],
-        body: creteProductsSchema,
+        body: createProductsSchema,
       },
     },
     createProductsController,

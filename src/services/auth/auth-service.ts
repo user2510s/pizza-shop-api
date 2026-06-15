@@ -1,7 +1,7 @@
-import { FastifyInstance } from "fastify";
+import { FastifyTypedInstance } from "../../@types/types";
 
 export class AuthService {
-  constructor(private app: FastifyInstance) {}
+  constructor(private app: FastifyTypedInstance) {}
 
   async validateToken(token: string) {
     const decoded = this.app.jwt.verify(token) as {
