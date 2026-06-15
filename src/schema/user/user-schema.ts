@@ -13,7 +13,7 @@ export const loginUserSchema = z.object({
 });
 
 export const cartUserSchema = z.object({
-  userId: z.string(),
+  userId: z.uuid().default("512675cc-e82a-47d4-aa6d-07dde7166701"),
   productId: z.string(),
 });
 

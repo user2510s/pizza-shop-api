@@ -54,6 +54,14 @@ export class UserRepository {
     });
   }
 
+  async verifyProduct(id: string) {
+    return prisma.products.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create(data: CreateUserDto) {
     const validateData = createUserSchema.parse(data);
 

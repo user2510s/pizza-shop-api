@@ -15,6 +15,24 @@ export class ProductRepositore {
       },
     });
   }
+  async deleteProduct(id: string, userId: string) {
+    return prisma.products.delete({
+      where: {
+        id,
+        userId,
+      },
+    });
+  }
+  async findProduct(id: string) {
+    return prisma.products.findFirst({
+      where: {
+        id,
+      },
+      omit: {
+        userId: true,
+      },
+    });
+  }
   async create(data: CreateProductDto) {
     const validateData = createProductsSchema.parse(data);
 

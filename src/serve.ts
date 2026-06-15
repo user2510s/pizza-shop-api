@@ -17,6 +17,8 @@ import { profilerUser } from "./http/routes/users/profile-user-router";
 import { createProduct } from "./http/routes/products/create-products-router";
 import { createRestaurant } from "./http/routes/restaurants/create-restaurant-router";
 import { cartUser } from "./http/routes/users/cart-user-router";
+import { findProducts } from "./http/routes/products/find-product-router";
+import { deleteProduct } from "./http/routes/products/delete-products-router";
 
 const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -59,6 +61,8 @@ export function start() {
   app.register(createProduct);
   app.register(createRestaurant);
   app.register(cartUser);
+  app.register(findProducts);
+  app.register(deleteProduct);
 
   app.listen({
     port: Number(process.env.PORT),
