@@ -40,8 +40,21 @@ export async function loginUserController(
     });
 
     return rep.status(200).send({
-      success: true,  
+      success: true,
       message: "Usuario encontrado",
     });
-  } catch (err) {}
+  } catch (err) {
+    if (err instanceof Error) {
+      if (err.message === "INVALIDE_CREDENTIALS") {
+        return rep.status(404).send({
+          success: false,
+          message: "Não foi possivel fazer login",
+        });
+      }
+    }
+    return rep.status(500).send({
+      success: false,
+      message: "Não foi possivel fazer login",
+    });
+  }
 }

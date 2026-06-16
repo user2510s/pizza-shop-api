@@ -11,7 +11,12 @@ export class CreateProductService {
     pricing,
     tags,
   }: CreateProductDto) {
+    if (userId == undefined) {
+      throw new Error("USER_NOT_FOUND");
+    }
+
     const user = await this.productRepository.findById(userId);
+
     if (!user) {
       throw new Error("USER_NOT_FOUND");
     }
