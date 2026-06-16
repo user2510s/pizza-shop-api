@@ -1,5 +1,9 @@
 import { prisma } from "../../lib/prisma";
-import { CreateUserDto, createUserSchema } from "../../schema/user/user-schema";
+import {
+  CreateUserDto,
+  createUserSchema,
+  EditUserDto,
+} from "../../schema/user/user-schema";
 
 export class UserRepository {
   async findByEmail(email: string) {
@@ -22,6 +26,7 @@ export class UserRepository {
       },
     });
   }
+
   async createCart(productId: string, userId: string) {
     return prisma.cart.create({
       data: {
@@ -30,6 +35,7 @@ export class UserRepository {
       },
     });
   }
+
   async getItemsCart(userId: string) {
     return prisma.cart.findMany({
       where: {
@@ -46,6 +52,7 @@ export class UserRepository {
       },
     });
   }
+
   async verifyItemCard(productId: string) {
     return prisma.cart.findFirst({
       where: {
@@ -67,6 +74,23 @@ export class UserRepository {
 
     return prisma.user.create({
       data: validateData,
+    });
+  }
+
+  async edit({ lastName, name, id }: EditUserDto) {
+    return prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        lastName,
+      },
+      omit: {
+        password: true,
+        id: true,
+        role: true,
+      },
     });
   }
 }
