@@ -17,11 +17,11 @@ export async function createRestautantController(
 
   try {
     const restaurant = await createRestaurantService.execute({
+      userId: req.user.id,
       name,
       address,
       openingTime,
       closingTime,
-      userId: req.user.id,
     });
 
     return rep.status(200).send(restaurant);

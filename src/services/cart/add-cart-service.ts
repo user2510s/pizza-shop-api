@@ -1,6 +1,7 @@
 import { CartRepository } from "../../repositores/cart/cart-repository";
 import { UserRepository } from "../../repositores/user/user-repository";
 import { CartUserDto } from "../../schema/cart/cart-schema";
+import { calculateCartTotal } from "../../utils/calculate-cart-total";
 
 export class AddItemCartService {
   constructor(
@@ -31,11 +32,7 @@ export class AddItemCartService {
 
     await this.cartRepository.createCart(productId, userId);
 
-    const items = await this.cartRepository.getItemsCart(userId);
-
-    const total = items.reduce((acc, item) => {
-      return acc + item.product.pricing;
-    }, 0);
+    const total = await calculateCartTotal(userId);
 
     return {
       success: true,

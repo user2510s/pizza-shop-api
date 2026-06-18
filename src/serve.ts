@@ -63,7 +63,7 @@ export function start() {
   app.register(createProduct);
   app.register(createRestaurant);
   app.register(addItemCart);
-  // app.register(deleteItemCart);
+  app.register(deleteItemCart);
   app.register(findProducts);
   app.register(deleteProduct);
   app.register(editUser);

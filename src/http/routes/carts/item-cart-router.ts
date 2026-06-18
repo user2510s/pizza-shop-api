@@ -1,3 +1,4 @@
+import z from "zod";
 import { FastifyTypedInstance } from "../../../@types/types";
 import { makeVerifyAuthMiddleware } from "../../../factories/make-verify-auth-middleware";
 import { addCartSchemaBody } from "../../../schema/cart/cart-schema";
@@ -12,7 +13,9 @@ export async function addItemCart(app: FastifyTypedInstance) {
       schema: {
         description: "Add item to card",
         tags: ["cart"],
-        body: addCartSchemaBody,
+        body: z.object({
+          productId: z.uuid(),
+        }),
       },
     },
     addCartController,

@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const createRestaurantSchema = z.object({
-  userId: z.uuid().default("512675cc-e82a-47d4-aa6d-07dde7166701"),
+  userId: z.uuid().optional(),
   name: z.string().default("restaurant"),
   address: z
     .string()

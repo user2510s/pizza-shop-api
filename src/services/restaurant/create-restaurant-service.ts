@@ -11,7 +11,11 @@ export class CreateRestaurantService {
     openingTime,
     closingTime,
   }: CreateRestaurantDto) {
+    if (!userId) {
+      throw new Error("USER_NOT_FOUND");
+    }
     const restaurant = await this.restaurantRepository.findById(userId);
+
     if (restaurant) {
       throw new Error("RESTAURANT_EXISTER");
     }
