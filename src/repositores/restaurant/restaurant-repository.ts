@@ -5,10 +5,10 @@ import {
 } from "../../schema/restaurant/restaurant-schema";
 
 export class RestaurantRepositore {
-  async findById(id: string) {
-    return prisma.user.findUnique({
+  async findById(userId: string) {
+    return prisma.restaurant.findUnique({
       where: {
-        id,
+        userId,
       },
     });
   }

@@ -10,6 +10,15 @@ export class CartRepository {
     });
   }
 
+  async removeCart(productId: string, userId: string) {
+    return prisma.cart.deleteMany({
+      where: {
+        userId,
+        productId,
+      },
+    });
+  }
+
   async getItemsCart(userId: string) {
     return prisma.cart.findMany({
       where: {

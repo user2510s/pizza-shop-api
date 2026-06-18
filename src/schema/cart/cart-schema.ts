@@ -7,4 +7,8 @@ export const addCartSchema = z.object({
 export const addCartSchemaBody = z.object({
   productId: z.uuid(),
 });
+
+export const removeCartSchema = z.object({
+  productId: z.uuid(),
+});
 export type CartUserDto = z.infer<typeof addCartSchema>;
