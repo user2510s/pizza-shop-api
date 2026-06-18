@@ -16,10 +16,11 @@ import { loginUser } from "./http/routes/users/login-user-router";
 import { profilerUser } from "./http/routes/users/profile-user-router";
 import { createProduct } from "./http/routes/products/create-products-router";
 import { createRestaurant } from "./http/routes/restaurants/create-restaurant-router";
-import { cartUser } from "./http/routes/users/cart-user-router";
+import { addItemCart } from "./http/routes/carts/item-cart-router";
 import { findProducts } from "./http/routes/products/find-product-router";
 import { deleteProduct } from "./http/routes/products/delete-products-router";
 import { editUser } from "./http/routes/users/edit-user-router";
+import { deleteItemCart } from "./http/routes/carts/delete-cart-router";
 
 const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
@@ -61,7 +62,8 @@ export function start() {
   app.register(profilerUser);
   app.register(createProduct);
   app.register(createRestaurant);
-  app.register(cartUser);
+  app.register(addItemCart);
+  // app.register(deleteItemCart);
   app.register(findProducts);
   app.register(deleteProduct);
   app.register(editUser);

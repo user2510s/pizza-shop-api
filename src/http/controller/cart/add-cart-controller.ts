@@ -1,21 +1,23 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../../../repositores/user/user-repository";
-import { CartUserService } from "../../../services/users/cart-user-service";
-import { cartUserSchema } from "../../../schema/user/user-schema";
+import { AddItemCartService } from "../../../services/cart/add-cart-service";
+import { addCartSchema } from "../../../schema/cart/cart-schema";
+import { CartRepository } from "../../../repositores/cart/cart-repository";
 
-const userRepositore = new UserRepository();
-const cartService = new CartUserService(userRepositore);
+const userRepository = new UserRepository();
+const cartRepository = new CartRepository();
+const cartService = new AddItemCartService(cartRepository, userRepository);
 
-export async function cartUserController(
+export async function addCartController(
   req: FastifyRequest,
   rep: FastifyReply,
 ) {
-  const { productId } = cartUserSchema.parse(req.body);
+  const { productId } = addCartSchema.parse(req.body);
 
   try {
     const card = await cartService.execute({
-      productId,
       userId: req.user.id,
+      productId,
     });
     return rep.status(201).send(card);
   } catch (err) {

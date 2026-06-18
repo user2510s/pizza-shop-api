@@ -27,40 +27,6 @@ export class UserRepository {
     });
   }
 
-  async createCart(productId: string, userId: string) {
-    return prisma.cart.create({
-      data: {
-        productId,
-        userId,
-      },
-    });
-  }
-
-  async getItemsCart(userId: string) {
-    return prisma.cart.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        product: {
-          select: {
-            id: true,
-            name: true,
-            pricing: true,
-          },
-        },
-      },
-    });
-  }
-
-  async verifyItemCard(productId: string) {
-    return prisma.cart.findFirst({
-      where: {
-        productId,
-      },
-    });
-  }
-
   async verifyProduct(id: string) {
     return prisma.products.findFirst({
       where: {
