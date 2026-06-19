@@ -12,7 +12,7 @@ import cookie from "@fastify/cookie";
 import fastifyJwt from "@fastify/jwt";
 import "dotenv/config";
 import { createUser } from "./http/routes/users/create-user-router";
-import { loginUser } from "./http/routes/users/login-user-router";
+import { authLogin } from "./http/routes/auth/auth-login-router";
 import { profilerUser } from "./http/routes/users/profile-user-router";
 import { createProduct } from "./http/routes/products/create-products-router";
 import { createRestaurant } from "./http/routes/restaurants/create-restaurant-router";
@@ -58,7 +58,7 @@ export function start() {
   });
 
   app.register(createUser);
-  app.register(loginUser);
+  app.register(authLogin);
   app.register(profilerUser);
   app.register(createProduct);
   app.register(createRestaurant);
