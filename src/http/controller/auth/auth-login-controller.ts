@@ -54,7 +54,7 @@ export async function authloginController(
     return rep.status(200).send({
       success: true,
       message: "Usuario encontrado",
-      refreshtoken,
+      //refreshtoken,
     });
   } catch (err) {
     if (err instanceof Error) {

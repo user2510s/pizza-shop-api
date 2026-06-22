@@ -26,7 +26,7 @@ import { authRefresh } from "./http/routes/auth/auth-refresh-router";
 import { connectRedis } from "./lib/redis";
 
 export async function buildApp() {
-  const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
+  const app = fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
   await connectRedis();
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
@@ -60,11 +60,20 @@ export async function buildApp() {
     routePrefix: "/docs",
   });
 
-  app.get("/hello", async () => {
-    return {
-      message: "Olá mundo",
-    };
-  });
+  app.get(
+    "/hello",
+    {
+      schema: {
+        tags: ["hello"],
+        description: "verify status",
+      },
+    },
+    async () => {
+      return {
+        message: "Olá mundo",
+      };
+    },
+  );
 
   await app.register(createUser);
   await app.register(authLogin);
