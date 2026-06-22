@@ -22,15 +22,19 @@ import { deleteProduct } from "./http/routes/products/delete-products-router";
 import { editUser } from "./http/routes/users/edit-user-router";
 import { deleteItemCart } from "./http/routes/carts/delete-cart-router";
 
+import { authRefresh } from "./http/routes/auth/auth-refresh-router";
+import { connectRedis } from "./lib/redis";
+
 const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
-export function start() {
+export async function start() {
+  await connectRedis();
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
     throw new Error("JWT_SECRET is not defined");
   }
-  app.register(fastifyJwt, { secret: jwtSecret });
-  app.register(cookie, {
+  await app.register(fastifyJwt, { secret: jwtSecret });
+  await app.register(cookie, {
     secret: "my-secret",
     hook: "onRequest",
     parseOptions: {},
@@ -38,11 +42,11 @@ export function start() {
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
 
-  app.register(fastifyCors, {
+  await app.register(fastifyCors, {
     origin: "http://localhost:5173",
     credentials: true,
   });
-  app.register(fastifySwagger, {
+  await app.register(fastifySwagger, {
     openapi: {
       info: {
         title: "pizza-shop",
@@ -53,22 +57,24 @@ export function start() {
     transform: jsonSchemaTransform,
   });
 
-  app.register(fastifySwaggerUi, {
+  await app.register(fastifySwaggerUi, {
     routePrefix: "/docs",
   });
 
-  app.register(createUser);
-  app.register(authLogin);
-  app.register(profilerUser);
-  app.register(createProduct);
-  app.register(createRestaurant);
-  app.register(addItemCart);
-  app.register(deleteItemCart);
-  app.register(findProducts);
-  app.register(deleteProduct);
-  app.register(editUser);
+  await app.register(createUser);
+  await app.register(authLogin);
+  await app.register(authRefresh);
 
-  app.listen({
+  await app.register(profilerUser);
+  await app.register(createProduct);
+  await app.register(createRestaurant);
+  await app.register(addItemCart);
+  await app.register(deleteItemCart);
+  await app.register(findProducts);
+  await app.register(deleteProduct);
+  await app.register(editUser);
+
+  await app.listen({
     port: Number(process.env.PORT),
   });
 }

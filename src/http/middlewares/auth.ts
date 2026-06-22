@@ -5,7 +5,7 @@ export class VerifyAuthMiddleware {
   constructor(private authService: AuthService) {}
 
   async handle(req: FastifyRequest, rep: FastifyReply) {
-    const token = req.cookies["user_login"];
+    const token = req.cookies["access_token"];
 
     if (!token) {
       return rep.status(401).send({

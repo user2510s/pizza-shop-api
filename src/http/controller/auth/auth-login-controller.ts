@@ -1,36 +1,48 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../../../repositores/user/user-repository";
-import { LoginUserService } from "../../../services/users/login-user-service";
 import { loginUserSchema } from "../../../schema/user/user-schema";
+import { AuthLoginService } from "../../../services/auth/auth-login-service";
+import { generateRefreshToken } from "../../../utils/jwt/generate-refresh-token";
 
 const userRepositore = new UserRepository();
-const userService = new LoginUserService(userRepositore);
+const authService = new AuthLoginService(userRepositore);
 
-export async function loginUserController(
+export async function authloginController(
   req: FastifyRequest,
   rep: FastifyReply,
 ) {
   const { email, password } = loginUserSchema.parse(req.body);
 
   try {
-    const user = await userService.execute({
+    const user = await authService.execute({
       email,
       password,
     });
 
-    const token = req.server.jwt.sign(
+    const access_token = req.server.jwt.sign(
       {
         id: user.id,
         email: user.email,
       },
       {
-        expiresIn: "1h",
+        expiresIn: "60s",
       },
     );
 
+    const refreshtoken = await generateRefreshToken(user.id);
+
     const isProd = process.env.NODE_ENV === "production";
 
-    rep.cookie("user_login", token, {
+    rep.cookie("access_token", access_token, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      maxAge: 60,
+      path: "/",
+      domain: isProd ? "" : "localhost",
+    });
+
+    rep.setCookie("refresh_token", refreshtoken, {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? "none" : "lax",
@@ -42,6 +54,7 @@ export async function loginUserController(
     return rep.status(200).send({
       success: true,
       message: "Usuario encontrado",
+      refreshtoken,
     });
   } catch (err) {
     if (err instanceof Error) {

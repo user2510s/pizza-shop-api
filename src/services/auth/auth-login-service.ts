@@ -2,7 +2,7 @@ import { UserRepository } from "../../repositores/user/user-repository";
 import { LoginUserDto } from "../../schema/user/user-schema";
 import { verifyHash } from "../../utils/hash";
 
-export class LoginUserService {
+export class AuthLoginService {
   constructor(private userRepository: UserRepository) {}
 
   async execute({ email, password }: LoginUserDto) {

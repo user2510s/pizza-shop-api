@@ -1,5 +1,5 @@
 import { FastifyTypedInstance } from "../../../@types/types";
-import { loginUserController } from "../../controller/users/login-user-controller";
+import { authloginController } from "../../controller/auth/auth-login-controller";
 import { loginUserSchema } from "../../../schema/user/user-schema";
 
 export async function authLogin(app: FastifyTypedInstance) {
@@ -12,6 +12,6 @@ export async function authLogin(app: FastifyTypedInstance) {
         body: loginUserSchema,
       },
     },
-    loginUserController,
+    authloginController,
   );
 }
