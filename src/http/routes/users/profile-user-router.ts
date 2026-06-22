@@ -8,7 +8,7 @@ export async function profilerUser(app: FastifyTypedInstance) {
   const verifyAuth = makeVerifyAuthMiddleware(app);
 
   app.get(
-    "/user",
+    "/profile",
     {
       preHandler: [verifyAuth.handle.bind(verifyAuth)],
       schema: {
