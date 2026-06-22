@@ -25,9 +25,8 @@ import { deleteItemCart } from "./http/routes/carts/delete-cart-router";
 import { authRefresh } from "./http/routes/auth/auth-refresh-router";
 import { connectRedis } from "./lib/redis";
 
-const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
-
-export async function start() {
+export async function buildApp() {
+  const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
   await connectRedis();
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
@@ -61,6 +60,12 @@ export async function start() {
     routePrefix: "/docs",
   });
 
+  app.get("/hello", async () => {
+    return {
+      message: "Olá mundo",
+    };
+  });
+
   await app.register(createUser);
   await app.register(authLogin);
   await app.register(authRefresh);
@@ -74,7 +79,7 @@ export async function start() {
   await app.register(deleteProduct);
   await app.register(editUser);
 
-  await app.listen({
-    port: Number(process.env.PORT),
-  });
+  await app.ready();
+
+  return app;
 }
