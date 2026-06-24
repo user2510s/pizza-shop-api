@@ -37,7 +37,7 @@ export async function refreshController(
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? "none" : "lax",
-      maxAge: 60,
+      maxAge: 60 * 62,
       path: "/",
       domain: isProd ? "" : "localhost",
     });
@@ -46,7 +46,7 @@ export async function refreshController(
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? "none" : "lax",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 62,
       path: "/",
     });
 

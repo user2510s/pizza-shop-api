@@ -1,7 +1,7 @@
-import z from "zod";
 import { FastifyTypedInstance } from "../../../@types/types";
 import { makeVerifyAuthMiddleware } from "../../../factories/make-verify-auth-middleware";
 import { createRestautantController } from "../../controller/restaurants/create-restaurant-controller";
+import { createRestaurantSchema } from "../../../schema/restaurant/restaurant-schema";
 
 export async function createRestaurant(app: FastifyTypedInstance) {
   const verifyAuth = makeVerifyAuthMiddleware(app);
@@ -12,12 +12,7 @@ export async function createRestaurant(app: FastifyTypedInstance) {
       schema: {
         description: "Criar Restaurant",
         tags: ["restaurant"],
-        body: z.object({
-          name: z.string(),
-          address: z.string(),
-          openingTime: z.string(),
-          closingTime: z.string(),
-        }),
+        body: createRestaurantSchema.omit({ userId: true }),
       },
     },
     createRestautantController,

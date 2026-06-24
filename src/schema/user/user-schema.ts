@@ -12,11 +12,15 @@ export const loginUserSchema = z.object({
   password: z.string().min(5, { error: "Precisa ter no minimo 5 caracterios" }),
 });
 
-
+export const deleteUserSchema = z.object({
+  id: z.uuid().optional(),
+  email: z.email(),
+});
 
 export const profileUserSchema = z.object({
   id: z.string(),
 });
+
 export const editUserSchema = z.object({
   id: z.uuid().optional(),
   name: z
@@ -33,3 +37,4 @@ export type CreateUserDto = z.infer<typeof createUserSchema>;
 export type EditUserDto = z.infer<typeof editUserSchema>;
 export type LoginUserDto = z.infer<typeof loginUserSchema>;
 export type ProfileUserDto = z.infer<typeof profileUserSchema>;
+export type DeleteUserDto = z.infer<typeof deleteUserSchema>;

@@ -31,6 +31,9 @@ model User {
   products   Products[]
   carts      Cart[]
   historics  Historic[]
+
+  @@unique([id, email])
+  @@index([name])
 }
 
 model Cart {
@@ -40,6 +43,9 @@ model Cart {
 
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   product Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model Historic {
@@ -48,6 +54,9 @@ model Historic {
   productId String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([productId])
 }
 
 model Restaurant {
@@ -70,4 +79,6 @@ model Products {
   tags        String[]
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   carts       Cart[]
+
+  @@index([userId])
 }

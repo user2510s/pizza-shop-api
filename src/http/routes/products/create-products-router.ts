@@ -12,7 +12,7 @@ export async function createProduct(app: FastifyTypedInstance) {
       schema: {
         description: "Criar Produto",
         tags: ["products"],
-        body: createProductsSchema,
+        body: createProductsSchema.omit({ userId: true }),
       },
     },
     createProductsController,

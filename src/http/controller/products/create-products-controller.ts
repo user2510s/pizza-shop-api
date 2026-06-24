@@ -10,9 +10,9 @@ export async function createProductsController(
   req: FastifyRequest,
   rep: FastifyReply,
 ) {
-  const { name, description, pricing, tags } = createProductsSchema.parse(
-    req.body,
-  );
+  const { name, description, pricing, tags } = createProductsSchema
+    .omit({ userId: true })
+    .parse(req.body);
 
   try {
     const product = await createProductsService.execute({

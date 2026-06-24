@@ -22,6 +22,6 @@ export class CreateUserService {
     return {
       success: true,
       message: "Usuário criado com sucesso!",
-    };
+    };  
   }
 }

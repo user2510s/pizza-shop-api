@@ -24,6 +24,7 @@ import { deleteItemCart } from "./http/routes/carts/delete-cart-router";
 
 import { authRefresh } from "./http/routes/auth/auth-refresh-router";
 import { connectRedis } from "./lib/redis";
+import { deleteUser } from "./http/routes/users/delete-user-router";
 
 export async function buildApp() {
   const app = fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
@@ -80,6 +81,7 @@ export async function buildApp() {
   await app.register(authRefresh);
 
   await app.register(profilerUser);
+  await app.register(deleteUser);
   await app.register(createProduct);
   await app.register(createRestaurant);
   await app.register(addItemCart);

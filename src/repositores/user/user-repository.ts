@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma";
 import {
   CreateUserDto,
   createUserSchema,
+  DeleteUserDto,
   EditUserDto,
 } from "../../schema/user/user-schema";
 
@@ -19,10 +20,11 @@ export class UserRepository {
       where: {
         id,
       },
-      omit: {
-        password: true,
-        id: true,
-        role: true,
+      select: {
+        publicId: true,
+        email: true,
+        name: true,
+        lastName: true,
       },
     });
   }
@@ -56,6 +58,21 @@ export class UserRepository {
         password: true,
         id: true,
         role: true,
+      },
+    });
+  }
+
+  async deleteUser({ id, email }: DeleteUserDto) {
+    if (!id) {
+      throw new Error("USER_NOT_FOUND");
+    }
+
+    return prisma.user.delete({
+      where: {
+        id_email: {
+          id,
+          email,
+        },
       },
     });
   }

@@ -6,15 +6,16 @@ import { response } from "../../../constant/responses-user";
 const userRepository = new UserRepository();
 const userService = new ProfileUserService(userRepository);
 
-export async function profileUser(req: FastifyRequest, rep: FastifyReply) {
+export async function profileUserController(
+  req: FastifyRequest,
+  rep: FastifyReply,
+) {
   try {
-    await userService.execute({
+    const user = await userService.execute({
       id: req.user.id,
     });
 
-    return rep
-      .status(response.user.found.status)
-      .send(response.user.found.response);
+    return rep.status(response.user.found.status).send(user);
   } catch (err) {
     if (err instanceof Error) {
       if (err.message === "USER_NOT_FOUND") {
